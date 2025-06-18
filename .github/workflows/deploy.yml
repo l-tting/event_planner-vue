@@ -29,8 +29,8 @@ jobs:
       - name: Sync to /var/www/html
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
-            rm -rf /var/www/html/*
-            cp -r /root/choir-website/* /var/www/html/
+            rm -rf /var/www/choir_website/*
+            cp -r /root/choir-website/* /var/www/choir_website/
           EOF
 
       - name: Restart Nginx
