@@ -26,12 +26,15 @@ jobs:
 
           scp -r . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
 
-      - name: Sync to /var/www/html
+      - name: Sync to /var/www/choir_website
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
-            rm -rf /var/www/choir_website/*
-            cp -r /root/choir-website/* /var/www/choir_website/
+            sudo mkdir -p /var/www/choir_website
+            sudo rm -rf /var/www/choir_website/*
+            sudo cp -r /root/choir-website/* /var/www/choir_website/
+            sudo chown -R www-data:www-data /var/www/choir_website
           EOF
+
 
       - name: Restart Nginx
         run: |
