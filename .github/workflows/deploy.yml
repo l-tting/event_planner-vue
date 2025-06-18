@@ -1,4 +1,4 @@
-name: Deploy Static Site (No Docker)
+name: Deploy Static Site (with backup in /root)
 
 on:
   push:
@@ -18,13 +18,20 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy static files to server
+      - name: Deploy files to /root/choir-website
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
+            mkdir -p /root/choir-website
+          EOF
+
+          scp -r . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
+
+      - name: Sync to /var/www/html
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
             rm -rf /var/www/html/*
+            cp -r /root/choir-website/* /var/www/html/
           EOF
-
-          scp -r ./* ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/var/www/html/
 
       - name: Restart Nginx
         run: |
