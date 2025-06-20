@@ -328,4 +328,569 @@ eventImageInput.addEventListener('change', (e) => {
 
 // Initial render
 renderEvents();
-renderTickets(); 
+renderTickets();
+
+// Manage Admin Logic
+const addAdminForm = document.getElementById('addAdminForm');
+const addAdminSuccess = document.getElementById('addAdminSuccess');
+const addAdminError = document.getElementById('addAdminError');
+const addAdminErrorText = document.getElementById('addAdminErrorText');
+const cancelAddAdminFormBtn = document.getElementById('cancelAddAdminFormBtn');
+const toggleAddFormBtn = document.getElementById('toggleAddFormBtn');
+const addAdminFormContainer = document.getElementById('addAdminFormContainer');
+const adminList = document.getElementById('adminList');
+
+// Mock admin data (replace with your backend data)
+let adminUsers = [
+    {
+        id: 1,
+        fullName: 'Admin User',
+        email: 'admin@example.com',
+        phone: '+1 (555) 123-4567',
+        role: 'Super Admin',
+        status: 'Active',
+        lastLogin: '2024-01-15 10:30 AM'
+    },
+    {
+        id: 2,
+        fullName: 'John Doe',
+        email: 'john@example.com',
+        phone: '+1 (555) 234-5678',
+        role: 'Admin',
+        status: 'Active',
+        lastLogin: '2024-01-14 02:15 PM'
+    },
+    {
+        id: 3,
+        fullName: 'Jane Smith',
+        email: 'jane@example.com',
+        phone: '+1 (555) 345-6789',
+        role: 'Moderator',
+        status: 'Inactive',
+        lastLogin: '2024-01-10 09:45 AM'
+    }
+];
+
+// Toggle add admin form
+toggleAddFormBtn.addEventListener('click', function() {
+    const isHidden = addAdminFormContainer.classList.contains('hidden');
+    
+    if (isHidden) {
+        // Show form
+        addAdminFormContainer.classList.remove('hidden');
+        toggleAddFormBtn.innerHTML = '<i class="fas fa-minus mr-2"></i>Hide Form';
+        toggleAddFormBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+        toggleAddFormBtn.classList.add('bg-gray-600', 'hover:bg-gray-700');
+    } else {
+        // Hide form
+        addAdminFormContainer.classList.add('hidden');
+        toggleAddFormBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add New Admin';
+        toggleAddFormBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+        toggleAddFormBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+        addAdminForm.reset();
+        addAdminSuccess.classList.add('hidden');
+        addAdminError.classList.add('hidden');
+    }
+});
+
+// Cancel add admin form
+cancelAddAdminFormBtn.addEventListener('click', function() {
+    addAdminFormContainer.classList.add('hidden');
+    toggleAddFormBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add New Admin';
+    toggleAddFormBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+    toggleAddFormBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+    addAdminForm.reset();
+    addAdminSuccess.classList.add('hidden');
+    addAdminError.classList.add('hidden');
+});
+
+// Render admin list
+function renderAdminList() {
+    adminList.innerHTML = adminUsers.map(admin => `
+        <tr class="border-b border-gray-200 hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-sm font-medium text-indigo-600">
+                            ${admin.fullName ? admin.fullName.split(' ').map(n => n.charAt(0)).join('') : 'A'}
+                        </span>
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">${admin.fullName || 'Admin User'}</div>
+                        <div class="text-sm text-gray-500">${admin.phone || 'No phone'}</div>
+                    </div>
+                </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${admin.email}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 py-1 text-xs font-medium rounded-full ${
+                    admin.role === 'Super Admin' ? 'bg-purple-100 text-purple-800' :
+                    admin.role === 'Admin' ? 'bg-blue-100 text-blue-800' :
+                    'bg-green-100 text-green-800'
+                }">
+                    ${admin.role}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 py-1 text-xs font-medium rounded-full ${
+                    admin.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }">
+                    ${admin.status}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${admin.lastLogin}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <div class="flex space-x-2">
+                    <button onclick="editAdmin(${admin.id})" class="text-indigo-600 hover:text-indigo-900">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="toggleAdminStatus(${admin.id})" class="text-yellow-600 hover:text-yellow-900">
+                        <i class="fas fa-toggle-on"></i>
+                    </button>
+                    <button onclick="deleteAdmin(${admin.id})" class="text-red-600 hover:text-red-900">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Edit admin function
+function editAdmin(adminId) {
+    const admin = adminUsers.find(a => a.id === adminId);
+    if (admin) {
+        // You can implement edit functionality here
+        alert(`Edit admin: ${admin.fullName}`);
+    }
+}
+
+// Toggle admin status function
+function toggleAdminStatus(adminId) {
+    const admin = adminUsers.find(a => a.id === adminId);
+    if (admin) {
+        admin.status = admin.status === 'Active' ? 'Inactive' : 'Active';
+        renderAdminList();
+        
+        // You can add backend call here
+        // fetch(`/admin/toggle-status/${adminId}`, { method: 'POST' })
+    }
+}
+
+// Delete admin function
+function deleteAdmin(adminId) {
+    const admin = adminUsers.find(a => a.id === adminId);
+    if (admin) {
+        if (confirm(`Are you sure you want to delete ${admin.fullName}?`)) {
+            adminUsers = adminUsers.filter(a => a.id !== adminId);
+            renderAdminList();
+            
+            // You can add backend call here
+            // fetch(`/admin/delete/${adminId}`, { method: 'DELETE' })
+        }
+    }
+}
+
+// Handle Add Admin form submission
+addAdminForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Hide any existing messages
+    addAdminSuccess.classList.add('hidden');
+    addAdminError.classList.add('hidden');
+    
+    // Get form data
+    const formData = new FormData(addAdminForm);
+    const adminData = {
+        fullName: formData.get('fullName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        password: formData.get('password'),
+        confirmPassword: formData.get('confirmPassword')
+    };
+    
+    // Validate form data
+    const validation = validateAdminForm(adminData);
+    if (!validation.isValid) {
+        showAddAdminError(validation.message);
+        return;
+    }
+    
+    // Submit to backend
+    submitAdminData(adminData);
+});
+
+// Form validation function
+function validateAdminForm(data) {
+    // Check if passwords match
+    if (data.password !== data.confirmPassword) {
+        return {
+            isValid: false,
+            message: 'Passwords do not match. Please try again.'
+        };
+    }
+    
+    // Check password strength
+    if (data.password.length < 8) {
+        return {
+            isValid: false,
+            message: 'Password must be at least 8 characters long.'
+        };
+    }
+    
+    // Check if full name is valid
+    if (data.fullName.length < 2) {
+        return {
+            isValid: false,
+            message: 'Full name must be at least 2 characters long.'
+        };
+    }
+    
+    // Check if email is valid
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+        return {
+            isValid: false,
+            message: 'Please enter a valid email address.'
+        };
+    }
+    
+    // Check if phone is valid (basic validation)
+    if (data.phone.length < 10) {
+        return {
+            isValid: false,
+            message: 'Please enter a valid phone number.'
+        };
+    }
+    
+    return { isValid: true };
+}
+
+// Submit admin data to backend
+function submitAdminData(adminData) {
+    // Show loading state
+    const submitBtn = addAdminForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding Admin...';
+    submitBtn.disabled = true;
+    
+    // You can replace this with your actual backend endpoint
+    fetch('/admin/add-admin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adminData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAddAdminSuccess();
+            addAdminForm.reset();
+            // Add new admin to the list
+            const newAdmin = {
+                id: adminUsers.length + 1,
+                fullName: adminData.fullName,
+                email: adminData.email,
+                phone: adminData.phone,
+                role: 'Admin', // Default role
+                status: 'Active',
+                lastLogin: 'Never'
+            };
+            adminUsers.push(newAdmin);
+            renderAdminList();
+        } else {
+            showAddAdminError(data.message || 'Failed to add admin user.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAddAdminError('Network error. Please try again.');
+    })
+    .finally(() => {
+        // Reset button state
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+}
+
+// Show success message
+function showAddAdminSuccess() {
+    addAdminSuccess.classList.remove('hidden');
+    addAdminError.classList.add('hidden');
+    
+    // Auto-hide success message after 3 seconds
+    setTimeout(() => {
+        addAdminSuccess.classList.add('hidden');
+    }, 3000);
+}
+
+// Show error message
+function showAddAdminError(message) {
+    addAdminErrorText.textContent = message;
+    addAdminError.classList.remove('hidden');
+    addAdminSuccess.classList.add('hidden');
+}
+
+// Initialize admin list
+renderAdminList();
+
+// Profile Dropdown Logic
+const profileBtn = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+const profileDropdown = document.getElementById('profileDropdown');
+
+// Toggle profile dropdown
+profileBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    profileMenu.classList.toggle('hidden');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    if (!profileDropdown.contains(e.target)) {
+        profileMenu.classList.add('hidden');
+    }
+});
+
+// Load current user data (you can replace this with your backend data)
+function loadCurrentUserData() {
+    // This would typically come from your backend
+    const userData = {
+        firstName: 'Admin',
+        lastName: 'User',
+        email: 'admin@example.com',
+        username: 'admin',
+        role: 'Super Admin'
+    };
+    
+    // Update profile display
+    document.getElementById('currentUser').textContent = `${userData.firstName} ${userData.lastName}`;
+    document.getElementById('profileName').textContent = `${userData.firstName} ${userData.lastName}`;
+    document.getElementById('profileEmail').textContent = userData.email;
+    document.getElementById('profileRole').textContent = userData.role;
+    
+    // Update settings form
+    document.getElementById('settingsFirstName').value = userData.firstName;
+    document.getElementById('settingsLastName').value = userData.lastName;
+    document.getElementById('settingsEmail').value = userData.email;
+    document.getElementById('settingsUsername').value = userData.username;
+}
+
+// Change Password Modal Logic
+const changePasswordBtn = document.getElementById('changePasswordBtn');
+const changePasswordModal = document.getElementById('changePasswordModal');
+const changePasswordForm = document.getElementById('changePasswordForm');
+const cancelChangePasswordBtn = document.getElementById('cancelChangePasswordBtn');
+const cancelChangePasswordBtn2 = document.getElementById('cancelChangePasswordBtn2');
+const changePasswordSuccess = document.getElementById('changePasswordSuccess');
+const changePasswordError = document.getElementById('changePasswordError');
+const changePasswordErrorText = document.getElementById('changePasswordErrorText');
+
+// Open change password modal
+changePasswordBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    profileMenu.classList.add('hidden');
+    changePasswordModal.classList.remove('hidden');
+    changePasswordModal.classList.add('flex');
+    changePasswordForm.reset();
+    changePasswordSuccess.classList.add('hidden');
+    changePasswordError.classList.add('hidden');
+});
+
+// Close change password modal
+function closeChangePasswordModal() {
+    changePasswordModal.classList.add('hidden');
+    changePasswordModal.classList.remove('flex');
+}
+
+cancelChangePasswordBtn.addEventListener('click', closeChangePasswordModal);
+cancelChangePasswordBtn2.addEventListener('click', closeChangePasswordModal);
+
+// Handle change password form submission
+changePasswordForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+    
+    // Hide messages
+    changePasswordSuccess.classList.add('hidden');
+    changePasswordError.classList.add('hidden');
+    
+    // Validate passwords
+    if (newPassword !== confirmNewPassword) {
+        showChangePasswordError('New passwords do not match.');
+        return;
+    }
+    
+    if (newPassword.length < 8) {
+        showChangePasswordError('New password must be at least 8 characters long.');
+        return;
+    }
+    
+    // Submit to backend
+    const passwordData = {
+        currentPassword: currentPassword,
+        newPassword: newPassword
+    };
+    
+    // Show loading state
+    const submitBtn = changePasswordForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Changing Password...';
+    submitBtn.disabled = true;
+    
+    // You can replace this with your actual backend endpoint
+    fetch('/admin/change-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(passwordData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showChangePasswordSuccess();
+            changePasswordForm.reset();
+        } else {
+            showChangePasswordError(data.message || 'Failed to change password.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showChangePasswordError('Network error. Please try again.');
+    })
+    .finally(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+});
+
+function showChangePasswordSuccess() {
+    changePasswordSuccess.classList.remove('hidden');
+    changePasswordError.classList.add('hidden');
+    
+    setTimeout(() => {
+        closeChangePasswordModal();
+    }, 2000);
+}
+
+function showChangePasswordError(message) {
+    changePasswordErrorText.textContent = message;
+    changePasswordError.classList.remove('hidden');
+    changePasswordSuccess.classList.add('hidden');
+}
+
+// Settings Modal Logic
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const settingsForm = document.getElementById('settingsForm');
+const cancelSettingsBtn = document.getElementById('cancelSettingsBtn');
+const cancelSettingsBtn2 = document.getElementById('cancelSettingsBtn2');
+const settingsSuccess = document.getElementById('settingsSuccess');
+const settingsError = document.getElementById('settingsError');
+const settingsErrorText = document.getElementById('settingsErrorText');
+
+// Open settings modal
+settingsBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    profileMenu.classList.add('hidden');
+    settingsModal.classList.remove('hidden');
+    settingsModal.classList.add('flex');
+    settingsSuccess.classList.add('hidden');
+    settingsError.classList.add('hidden');
+});
+
+// Close settings modal
+function closeSettingsModal() {
+    settingsModal.classList.add('hidden');
+    settingsModal.classList.remove('flex');
+}
+
+cancelSettingsBtn.addEventListener('click', closeSettingsModal);
+cancelSettingsBtn2.addEventListener('click', closeSettingsModal);
+
+// Handle settings form submission
+settingsForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Hide messages
+    settingsSuccess.classList.add('hidden');
+    settingsError.classList.add('hidden');
+    
+    // Get form data
+    const formData = new FormData(settingsForm);
+    const settingsData = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        username: formData.get('username'),
+        emailNotifications: formData.get('emailNotifications') === 'on',
+        ticketNotifications: formData.get('ticketNotifications') === 'on',
+        adminNotifications: formData.get('adminNotifications') === 'on',
+        theme: formData.get('theme'),
+        compactMode: formData.get('compactMode') === 'on'
+    };
+    
+    // Show loading state
+    const submitBtn = settingsForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+    submitBtn.disabled = true;
+    
+    // You can replace this with your actual backend endpoint
+    fetch('/admin/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(settingsData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSettingsSuccess();
+            // Update profile display with new data
+            loadCurrentUserData();
+        } else {
+            showSettingsError(data.message || 'Failed to save settings.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showSettingsError('Network error. Please try again.');
+    })
+    .finally(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+});
+
+function showSettingsSuccess() {
+    settingsSuccess.classList.remove('hidden');
+    settingsError.classList.add('hidden');
+    
+    setTimeout(() => {
+        closeSettingsModal();
+    }, 2000);
+}
+
+function showSettingsError(message) {
+    settingsErrorText.textContent = message;
+    settingsError.classList.remove('hidden');
+    settingsSuccess.classList.add('hidden');
+}
+
+// Initialize user data
+loadCurrentUserData();
+
+// Logout functionality
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    if (confirm('Are you sure you want to logout?')) {
+        // Redirect to backend logout endpoint
+        window.location.href = '/admin/logout';
+    }
+}); 
