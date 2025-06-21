@@ -712,4 +712,111 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
         // Redirect to backend logout endpoint
         window.location.href = '/admin/logout';
     }
-}); 
+});
+
+// Add New Admin Functionality
+const toggleAddFormBtn = document.getElementById('toggleAddFormBtn');
+const addAdminFormContainer = document.getElementById('addAdminFormContainer');
+const addAdminForm = document.getElementById('addAdminForm');
+const cancelAddAdminFormBtn = document.getElementById('cancelAddAdminFormBtn');
+const addAdminSuccess = document.getElementById('addAdminSuccess');
+const addAdminError = document.getElementById('addAdminError');
+const addAdminErrorText = document.getElementById('addAdminErrorText');
+
+// Toggle add admin form
+toggleAddFormBtn.addEventListener('click', function() {
+    addAdminFormContainer.classList.toggle('hidden');
+    if (!addAdminFormContainer.classList.contains('hidden')) {
+        addAdminForm.reset();
+        addAdminSuccess.classList.add('hidden');
+        addAdminError.classList.add('hidden');
+    }
+});
+
+// Cancel add admin form
+cancelAddAdminFormBtn.addEventListener('click', function() {
+    addAdminFormContainer.classList.add('hidden');
+    addAdminForm.reset();
+    addAdminSuccess.classList.add('hidden');
+    addAdminError.classList.add('hidden');
+});
+
+// Handle add admin form submission
+addAdminForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Hide messages
+    addAdminSuccess.classList.add('hidden');
+    addAdminError.classList.add('hidden');
+    
+    // Get form data
+    const formData = new FormData(addAdminForm);
+    const adminData = {
+        fullName: formData.get('fullName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        password: formData.get('password'),
+        confirmPassword: formData.get('confirmPassword')
+    };
+    
+    // Validate passwords
+    if (adminData.password !== adminData.confirmPassword) {
+        showAddAdminError('Passwords do not match.');
+        return;
+    }
+    
+    if (adminData.password.length < 8) {
+        showAddAdminError('Password must be at least 8 characters long.');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = addAdminForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding Admin...';
+    submitBtn.disabled = true;
+    
+    // You can replace this with your actual backend endpoint
+    fetch('/admin/add-admin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adminData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAddAdminSuccess();
+            addAdminForm.reset();
+            addAdminFormContainer.classList.add('hidden');
+            // Refresh admin list
+            renderAdminList();
+        } else {
+            showAddAdminError(data.message || 'Failed to add admin user.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAddAdminError('Network error. Please try again.');
+    })
+    .finally(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+});
+
+function showAddAdminSuccess() {
+    addAdminSuccess.classList.remove('hidden');
+    addAdminError.classList.add('hidden');
+    
+    setTimeout(() => {
+        addAdminSuccess.classList.add('hidden');
+    }, 3000);
+}
+
+function showAddAdminError(message) {
+    addAdminErrorText.textContent = message;
+    addAdminError.classList.remove('hidden');
+    addAdminSuccess.classList.add('hidden');
+} 
