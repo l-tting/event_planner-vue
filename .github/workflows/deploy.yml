@@ -18,22 +18,20 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Create backup folder on droplet
+      - name: Ensure backup folder exists on droplet
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
             mkdir -p /root/choir-website
           EOF
 
-      - name: Copy project files to droplet
+      - name: Sync project files to droplet (add/update/delete)
         run: |
-          scp -r . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
 
       - name: Deploy using harmony.yml with Docker Compose
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
             cd /root/choir-website
-            ls -la
             docker-compose -f /root/harmony.yml down
             docker-compose -f /root/harmony.yml up -d --build
           EOF
-
