@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <!-- Admin Dashboard -->
@@ -141,43 +143,43 @@
                 </div>
                 
                 <!-- Add New Admin Form -->
-                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <div id="myapp" class="bg-white rounded-lg shadow p-6 mb-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-semibold">Add New Admin User</h3>
-                        <button id="toggleAddFormBtn" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">
+                        <button @click="toggleAddForm" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">
                             <i class="fas fa-plus mr-2"></i>Add New Admin
                         </button>
                     </div>
                     
-                    <div id="addAdminFormContainer" class="hidden">
-                        <form id="addAdminForm" class="space-y-3">
+                    <div v-show="showAddForm" class="space-y-3">
+                        <form @submit.prevent="createAdmin" class="space-y-3">
                             <div>
                                 <label for="adminFullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                <input type="text" id="adminFullName" name="fullName" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <input type="text" id="adminFullName" v-model="adminCreate.admin_name" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                             </div>
                             
                             <div>
                                 <label for="adminEmail" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                <input type="email" id="adminEmail" name="email" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <input type="email" id="adminEmail" v-model="adminCreate.admin_email" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                             </div>
                             
                             <div>
                                 <label for="adminPhone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                <input type="tel" id="adminPhone" name="phone" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <input type="tel" id="adminPhone" v-model="adminCreate.admin_phone" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                             </div>
                             
                             <div>
                                 <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                                <input type="password" id="adminPassword" name="password" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <input type="password" id="adminPassword" v-model="adminCreate.password" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                             </div>
                             
                             <div>
                                 <label for="adminConfirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-                                <input type="password" id="adminConfirmPassword" name="confirmPassword" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <input type="password" id="adminConfirmPassword" v-model="confirmPassword" class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                             </div>
                             
                             <div class="flex justify-end space-x-3 pt-2">
-                                <button type="button" id="cancelAddAdminFormBtn" class="px-4 py-1.5 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition duration-200">
+                                <button type="button" @click="cancelAddForm" class="px-4 py-1.5 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition duration-200">
                                     Cancel
                                 </button>
                                 <button type="submit" class="px-6 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200">
@@ -187,15 +189,15 @@
                         </form>
                         
                         <!-- Success Message -->
-                        <div id="addAdminSuccess" class="hidden mt-3 p-2 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm">
+                        <div v-show="showSuccess" class="mt-3 p-2 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm">
                             <i class="fas fa-check-circle mr-2"></i>
-                            <span>Admin user added successfully!</span>
+                            <span>{{ successMessage }}</span>
                         </div>
                         
                         <!-- Error Message -->
-                        <div id="addAdminError" class="hidden mt-3 p-2 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                        <div v-show="showError" class="mt-3 p-2 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
                             <i class="fas fa-exclamation-triangle mr-2"></i>
-                            <span id="addAdminErrorText">An error occurred. Please try again.</span>
+                            <span>{{ errorMessage }}</span>
                         </div>
                     </div>
                 </div>

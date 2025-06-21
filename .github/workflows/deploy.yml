@@ -18,24 +18,20 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy files to /root/choir-website
+      - name: Create backup folder on droplet
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
             mkdir -p /root/choir-website
           EOF
 
+      - name: Copy project files to droplet
+        run: |
           scp -r . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
 
-      - name: Sync to /var/www/choir_website
+      - name: Deploy with Docker Compose
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
-            sudo mkdir -p /var/www/choir_website
-            sudo rm -rf /var/www/choir_website/*
-            sudo cp -r /root/choir-website/* /var/www/choir_website/
-            sudo chown -R www-data:www-data /var/www/choir_website
+            cd /root/choir-website
+            docker compose down
+            docker compose up -d --build
           EOF
-
-
-      - name: Restart Nginx
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} "systemctl restart nginx"

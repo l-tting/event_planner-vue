@@ -330,16 +330,6 @@ eventImageInput.addEventListener('change', (e) => {
 renderEvents();
 renderTickets();
 
-// Manage Admin Logic
-const addAdminForm = document.getElementById('addAdminForm');
-const addAdminSuccess = document.getElementById('addAdminSuccess');
-const addAdminError = document.getElementById('addAdminError');
-const addAdminErrorText = document.getElementById('addAdminErrorText');
-const cancelAddAdminFormBtn = document.getElementById('cancelAddAdminFormBtn');
-const toggleAddFormBtn = document.getElementById('toggleAddFormBtn');
-const addAdminFormContainer = document.getElementById('addAdminFormContainer');
-const adminList = document.getElementById('adminList');
-
 // Mock admin data (replace with your backend data)
 let adminUsers = [
     {
@@ -371,41 +361,11 @@ let adminUsers = [
     }
 ];
 
-// Toggle add admin form
-toggleAddFormBtn.addEventListener('click', function() {
-    const isHidden = addAdminFormContainer.classList.contains('hidden');
-    
-    if (isHidden) {
-        // Show form
-        addAdminFormContainer.classList.remove('hidden');
-        toggleAddFormBtn.innerHTML = '<i class="fas fa-minus mr-2"></i>Hide Form';
-        toggleAddFormBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-        toggleAddFormBtn.classList.add('bg-gray-600', 'hover:bg-gray-700');
-    } else {
-        // Hide form
-        addAdminFormContainer.classList.add('hidden');
-        toggleAddFormBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add New Admin';
-        toggleAddFormBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
-        toggleAddFormBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-        addAdminForm.reset();
-        addAdminSuccess.classList.add('hidden');
-        addAdminError.classList.add('hidden');
-    }
-});
-
-// Cancel add admin form
-cancelAddAdminFormBtn.addEventListener('click', function() {
-    addAdminFormContainer.classList.add('hidden');
-    toggleAddFormBtn.innerHTML = '<i class="fas fa-plus mr-2"></i>Add New Admin';
-    toggleAddFormBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
-    toggleAddFormBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-    addAdminForm.reset();
-    addAdminSuccess.classList.add('hidden');
-    addAdminError.classList.add('hidden');
-});
-
 // Render admin list
 function renderAdminList() {
+    const adminList = document.getElementById('adminList');
+    if (!adminList) return;
+    
     adminList.innerHTML = adminUsers.map(admin => `
         <tr class="border-b border-gray-200 hover:bg-gray-50">
             <td class="px-6 py-4 whitespace-nowrap">
@@ -490,150 +450,6 @@ function deleteAdmin(adminId) {
         }
     }
 }
-
-// Handle Add Admin form submission
-addAdminForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Hide any existing messages
-    addAdminSuccess.classList.add('hidden');
-    addAdminError.classList.add('hidden');
-    
-    // Get form data
-    const formData = new FormData(addAdminForm);
-    const adminData = {
-        fullName: formData.get('fullName'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        password: formData.get('password'),
-        confirmPassword: formData.get('confirmPassword')
-    };
-    
-    // Validate form data
-    const validation = validateAdminForm(adminData);
-    if (!validation.isValid) {
-        showAddAdminError(validation.message);
-        return;
-    }
-    
-    // Submit to backend
-    submitAdminData(adminData);
-});
-
-// Form validation function
-function validateAdminForm(data) {
-    // Check if passwords match
-    if (data.password !== data.confirmPassword) {
-        return {
-            isValid: false,
-            message: 'Passwords do not match. Please try again.'
-        };
-    }
-    
-    // Check password strength
-    if (data.password.length < 8) {
-        return {
-            isValid: false,
-            message: 'Password must be at least 8 characters long.'
-        };
-    }
-    
-    // Check if full name is valid
-    if (data.fullName.length < 2) {
-        return {
-            isValid: false,
-            message: 'Full name must be at least 2 characters long.'
-        };
-    }
-    
-    // Check if email is valid
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-        return {
-            isValid: false,
-            message: 'Please enter a valid email address.'
-        };
-    }
-    
-    // Check if phone is valid (basic validation)
-    if (data.phone.length < 10) {
-        return {
-            isValid: false,
-            message: 'Please enter a valid phone number.'
-        };
-    }
-    
-    return { isValid: true };
-}
-
-// Submit admin data to backend
-function submitAdminData(adminData) {
-    // Show loading state
-    const submitBtn = addAdminForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding Admin...';
-    submitBtn.disabled = true;
-    
-    // You can replace this with your actual backend endpoint
-    fetch('/admin/add-admin', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(adminData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showAddAdminSuccess();
-            addAdminForm.reset();
-            // Add new admin to the list
-            const newAdmin = {
-                id: adminUsers.length + 1,
-                fullName: adminData.fullName,
-                email: adminData.email,
-                phone: adminData.phone,
-                role: 'Admin', // Default role
-                status: 'Active',
-                lastLogin: 'Never'
-            };
-            adminUsers.push(newAdmin);
-            renderAdminList();
-        } else {
-            showAddAdminError(data.message || 'Failed to add admin user.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showAddAdminError('Network error. Please try again.');
-    })
-    .finally(() => {
-        // Reset button state
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    });
-}
-
-// Show success message
-function showAddAdminSuccess() {
-    addAdminSuccess.classList.remove('hidden');
-    addAdminError.classList.add('hidden');
-    
-    // Auto-hide success message after 3 seconds
-    setTimeout(() => {
-        addAdminSuccess.classList.add('hidden');
-    }, 3000);
-}
-
-// Show error message
-function showAddAdminError(message) {
-    addAdminErrorText.textContent = message;
-    addAdminError.classList.remove('hidden');
-    addAdminSuccess.classList.add('hidden');
-}
-
-// Initialize admin list
-renderAdminList();
 
 // Profile Dropdown Logic
 const profileBtn = document.getElementById('profileBtn');
@@ -886,6 +702,9 @@ function showSettingsError(message) {
 
 // Initialize user data
 loadCurrentUserData();
+
+// Initialize admin list
+renderAdminList();
 
 // Logout functionality
 document.getElementById('logoutBtn').addEventListener('click', () => {
