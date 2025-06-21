@@ -26,7 +26,7 @@ jobs:
 
       - name: Sync project files to droplet (add/update/delete)
         run: |
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
+          rsync -avz --delete --exclude 'nginx/' -e "ssh -o StrictHostKeyChecking=no" . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
 
       - name: Deploy using harmony.yml with Docker Compose
         run: |
