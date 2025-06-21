@@ -28,10 +28,12 @@ jobs:
         run: |
           scp -r . ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/root/choir-website/
 
-      - name: Deploy with Docker Compose
+      - name: Deploy using harmony.yml with Docker Compose
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
             cd /root/choir-website
-            docker-compose -f harmony.yml down
-            docker-compose -f harmony.yml up -d --build
+            ls -la
+            docker-compose -f /root/harmony.yml down
+            docker-compose -f /root/harmony.yml up -d --build
           EOF
+
