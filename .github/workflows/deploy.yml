@@ -32,6 +32,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} << 'EOF'
             cd /root/choir-website
-            docker compose -f harmony.yml down
-            docker compose -f harmony.yml up -d --build
+            docker-compose -f harmony.yml down
+            docker-compose -f harmony.yml up -d --build
           EOF
