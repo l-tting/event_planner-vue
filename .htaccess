@@ -1,1 +1,23 @@
- 
+RewriteEngine On
+
+# Remove index.html from URLs
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R]
+
+# Internally rewrite clean URLs to .html files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Handle root directory - redirect to harmony
+RewriteRule ^$ harmony/index.html [L]
+
+# Handle admin directory
+RewriteRule ^admin/?$ admin/index.html [L]
+
+# Handle harmony directory
+RewriteRule ^harmony/?$ harmony/index.html [L]
+
+# Prevent direct access to .html files (optional - uncomment if you want to force clean URLs)
+# RewriteCond %{THE_REQUEST} \s/+(.+)\.html[\s?] [NC]
+# RewriteRule ^ /%1 [R=301,L] 

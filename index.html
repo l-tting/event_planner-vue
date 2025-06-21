@@ -3,13 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harmony Choir - Redirecting</title>
-    <meta http-equiv="refresh" content="0; url=harmony/index.html">
+    <title>Harmony Choir</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to Harmony Choir website...</p>
-    <script>
-        window.location.href = 'harmony/index.html';
-    </script>
+    <div class="container">
+        <h1>Harmony Choir</h1>
+        <p>Welcome to our choir website</p>
+        <a href="harmony" class="btn">Visit Website</a>
+        <a href="admin" class="btn">Admin Panel</a>
+    </div>
 </body>
 </html> 
