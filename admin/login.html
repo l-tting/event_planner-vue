@@ -231,12 +231,42 @@
 
     <!-- Enhanced JavaScript for password toggle and Vue app -->
     <script>
-        // Show login content immediately - no auth checks
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide loading screen and show login content immediately
-            document.getElementById('loadingScreen').style.display = 'none';
-            document.getElementById('loginContent').style.display = 'flex';
-        });
+        // Immediate authentication check - run before Vue app loads
+        (async function() {
+            // Fallback timeout to show login form if auth check takes too long
+            const fallbackTimeout = setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('loginContent').style.display = 'flex';
+            }, 3000); // Show login form after 3 seconds regardless
+            
+            try {
+                // Set a short timeout for faster response
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+                
+                const response = await fetch('/admin/verify', {
+                    method: 'GET',
+                    credentials: 'include',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                clearTimeout(fallbackTimeout);
+                
+                if (response.ok) {
+                    // Already authenticated, redirect to admin panel
+                    window.location.href = '/admin';
+                    return;
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                // Continue to login form on error or timeout
+            } finally {
+                // Hide loading screen and show login content immediately
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('loginContent').style.display = 'flex';
+            }
+        })();
         
         // Password toggle functionality
         document.getElementById('togglePassword').addEventListener('click', function() {
