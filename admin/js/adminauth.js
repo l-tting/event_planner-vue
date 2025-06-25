@@ -17,7 +17,8 @@ Vue.createApp({
             showSuccess: false,
             showError: false,
             successMessage: '',
-            errorMessage: ''
+            errorMessage: '',
+            isLoading: false
         }
     },
     methods: {
@@ -62,12 +63,24 @@ Vue.createApp({
             }
         },
         
-        adminLogin() {
+        async adminLogin() {
+            this.isLoading = true;
+            this.showError = false;
+            
             try {
-                const response = axios.post(this.url + 'login', this.adminAuth);
+                const response = await axios.post(this.url + 'login', this.adminAuth);
                 console.log(response.data);
+                
+                // Backend handles token storage in HTTP-only cookie
+                // Just redirect to admin panel on successful login
+                window.location.href = 'admin.html';
+                
             } catch (error) {
                 console.log(error);
+                this.showError = true;
+                this.errorMessage = error.response?.data?.detail || 'Login failed. Please check your credentials.';
+            } finally {
+                this.isLoading = false;
             }
         },
         

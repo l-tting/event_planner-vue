@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harmony Choir -Test Change</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♪</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♪</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
-        .music-note {  
+
+        .music-note {
             display: inline-block;
             font-size: 1.5rem;
             color: #4F46E5;
             animation: float 2s ease-in-out infinite;
             margin-right: 0.5rem;
         }
+
         .footer-music-note {
             display: inline-block;
             font-size: 1.5rem;
@@ -27,13 +39,16 @@
             animation: float 2s ease-in-out infinite;
             margin-right: 0.5rem;
         }
+
         .social-icon {
             font-size: 1.5rem;
             transition: transform 0.3s ease;
         }
+
         .social-icon:hover {
             transform: translateY(-3px);
         }
+
         .carousel-image {
             position: absolute;
             top: 0;
@@ -45,25 +60,30 @@
             background-size: cover;
             background-position: center;
         }
+
         .carousel-image.active {
             opacity: 1;
         }
+
         .navbar {
             background: linear-gradient(to right, #4F46E5, #7C3AED);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
+
         .nav-link {
             font-size: 1.1rem;
             font-weight: 500;
             color: white !important;
             transition: all 0.3s ease;
         }
+
         .nav-link:hover {
             color: #E0E7FF !important;
             transform: translateY(-2px);
         }
     </style>
 </head>
+
 <body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="navbar fixed w-full z-50">
@@ -91,16 +111,27 @@
         <div class="relative h-screen">
             <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-90"></div>
             <!-- Carousel Images -->
-            <div class="carousel-image active" style="background-image: url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
-            <div class="carousel-image" style="background-image: url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
-            <div class="carousel-image" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+            <div class="carousel-image active"
+                style="background-image: url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+            </div>
+            <div class="carousel-image"
+                style="background-image: url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+            </div>
+            <div class="carousel-image"
+                style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+            </div>
             <div class="relative h-full flex items-center justify-center text-center px-4">
                 <div class="max-w-3xl">
                     <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Experience the Power of Harmony</h1>
-                    <p class="text-xl text-white mb-8">Professional choral services for weddings, corporate events, and special occasions</p>
+                    <p class="text-xl text-white mb-8">Professional choral services for weddings, corporate events, and
+                        special occasions</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#contact" class="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition duration-300">Book Now</a>
-                        <a href="#upcoming-events" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition duration-300">Upcoming Events</a>
+                        <a href="#contact"
+                            class="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition duration-300">Book
+                            Now</a>
+                        <a href="#upcoming-events"
+                            class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition duration-300">Upcoming
+                            Events</a>
                     </div>
                 </div>
             </div>
@@ -113,8 +144,11 @@
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">About Our Choir</h2>
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <p class="text-gray-600 mb-6">Founded in 2010, Harmony Choir has established itself as one of the region's premier vocal ensembles. Our diverse repertoire spans classical masterpieces to contemporary arrangements, performed with precision and passion.</p>
-                    <p class="text-gray-600">With over 50 professional singers, we bring a rich, full sound to every performance, creating unforgettable musical experiences for our clients and their audiences.</p>
+                    <p class="text-gray-600 mb-6">Founded in 2010, Harmony Choir has established itself as one of the
+                        region's premier vocal ensembles. Our diverse repertoire spans classical masterpieces to
+                        contemporary arrangements, performed with precision and passion.</p>
+                    <p class="text-gray-600">With over 50 professional singers, we bring a rich, full sound to every
+                        performance, creating unforgettable musical experiences for our clients and their audiences.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-indigo-50 p-6 rounded-lg text-center">
@@ -146,17 +180,20 @@
                 <div class="bg-white p-8 rounded-lg shadow-lg">
                     <i class="fas fa-heart text-4xl text-indigo-600 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Weddings</h3>
-                    <p class="text-gray-600">Create the perfect atmosphere for your special day with our custom wedding ceremony and reception performances.</p>
+                    <p class="text-gray-600">Create the perfect atmosphere for your special day with our custom wedding
+                        ceremony and reception performances.</p>
                 </div>
                 <div class="bg-white p-8 rounded-lg shadow-lg">
                     <i class="fas fa-building text-4xl text-indigo-600 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Corporate Events</h3>
-                    <p class="text-gray-600">Elevate your corporate gatherings with professional choral performances tailored to your brand and message.</p>
+                    <p class="text-gray-600">Elevate your corporate gatherings with professional choral performances
+                        tailored to your brand and message.</p>
                 </div>
                 <div class="bg-white p-8 rounded-lg shadow-lg">
                     <i class="fas fa-glass-cheers text-4xl text-indigo-600 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Special Occasions</h3>
-                    <p class="text-gray-600">From birthdays to anniversaries, we create memorable musical moments for any celebration.</p>
+                    <p class="text-gray-600">From birthdays to anniversaries, we create memorable musical moments for
+                        any celebration.</p>
                 </div>
             </div>
         </div>
@@ -169,10 +206,12 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Event Card 1 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Summer Concert" class="w-full h-48 object-cover">
+                    <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+                        alt="Summer Concert" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Summer Concert Series</h3>
-                        <p class="text-gray-600 mb-4">Join us for an evening of classical and contemporary choral music at the </p>
+                        <p class="text-gray-600 mb-4">Join us for an evening of classical and contemporary choral music
+                            at the </p>
                         <div class="flex items-center text-gray-600 mb-2">
                             <i class="fas fa-calendar mr-2"></i>
                             <span>June 15, 2024 at 7:00 PM</span>
@@ -185,17 +224,21 @@
                             <div class="text-gray-600">
                                 <span class="font-semibold">$25</span> per ticket
                             </div>
-                            <a href="#contact" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">Get Tickets</a>
+                            <button onclick="openTicketBooking(this)"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">Get
+                                Tickets</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Event Card 2 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Corporate Gala" class="w-full h-48 object-cover">
+                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+                        alt="Corporate Gala" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Corporate Gala Performance</h3>
-                        <p class="text-gray-600 mb-4">Elegant choral performance for corporate events and business celebrations.</p>
+                        <p class="text-gray-600 mb-4">Elegant choral performance for corporate events and business
+                            celebrations.</p>
                         <div class="flex items-center text-gray-600 mb-2">
                             <i class="fas fa-calendar mr-2"></i>
                             <span>July 20, 2024 at 6:30 PM</span>
@@ -208,17 +251,21 @@
                             <div class="text-gray-600">
                                 <span class="font-semibold">$50</span> per ticket
                             </div>
-                            <a href="#contact" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">Get Tickets</a>
+                            <button onclick="openTicketBooking(this)"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">Get
+                                Tickets</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Event Card 3 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Wedding Ceremony" class="w-full h-48 object-cover">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+                        alt="Wedding Ceremony" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Wedding Ceremony</h3>
-                        <p class="text-gray-600 mb-4">Beautiful choral accompaniment for wedding ceremonies and receptions.</p>
+                        <p class="text-gray-600 mb-4">Beautiful choral accompaniment for wedding ceremonies and
+                            receptions.</p>
                         <div class="flex items-center text-gray-600 mb-2">
                             <i class="fas fa-calendar mr-2"></i>
                             <span>August 10, 2024 at 4:00 PM</span>
@@ -231,7 +278,9 @@
                             <div class="text-gray-600">
                                 <span class="font-semibold">$75</span> per ticket
                             </div>
-                            <a href="#contact" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">Get Tickets</a>
+                            <button onclick="openTicketBooking(this)"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition duration-300">Get
+                                Tickets</button>
                         </div>
                     </div>
                 </div>
@@ -240,91 +289,104 @@
     </section>
 
     <!-- Hidden Ticket Booking Section -->
-    <section id="ticketBooking" class="py-12 bg-gray-50 hidden">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 id="bookingEventTitle" class="text-3xl font-bold text-gray-800"></h3>
-                    <button onclick="closeBooking()" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times text-2xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-12">
-                    <div class="space-y-6 md:col-span-1">
-                        <div class="bg-indigo-50 p-6 rounded-lg">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">Event Details</h4>
-                            <div class="space-y-4">
-                                <div class="flex items-center">
-                                    <i class="fas fa-calendar text-indigo-600 w-6"></i>
-                                    <p id="bookingEventDate" class="text-lg text-gray-600 ml-3"></p>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-clock text-indigo-600 w-6"></i>
-                                    <p id="bookingEventTime" class="text-lg text-gray-600 ml-3"></p>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-map-marker-alt text-indigo-600 w-6"></i>
-                                    <p id="bookingEventLocation" class="text-lg text-gray-600 ml-3"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-indigo-50 p-6 rounded-lg">
-                            <h4 class="text-xl font-semibold text-gray-800 mb-4">About This Event</h4>
-                            <p id="bookingEventDescription" class="text-lg text-gray-600"></p>
-                        </div>
+    <div id="paymentApp">
+        <section id="ticketBooking" class="py-12 bg-gray-50 hidden">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 id="bookingEventTitle" class="text-3xl font-bold text-gray-800"></h3>
+                        <button onclick="closeBooking()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-2xl"></i>
+                        </button>
                     </div>
-                    <div class="bg-white border-2 border-gray-100 rounded-lg p-6 md:col-span-2">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-6">Book Your Tickets</h4>
-                        <form id="ticketForm" class="space-y-6">
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="ticketName" class="block text-lg font-medium text-gray-700 mb-2">Full Name</label>
-                                    <input type="text" id="ticketName" required class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label for="ticketEmail" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
-                                    <input type="email" id="ticketEmail" required class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
-                                </div>
-                            </div>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="ticketPhone" class="block text-lg font-medium text-gray-700 mb-2">Phone Number</label>
-                                    <input type="tel" id="ticketPhone" required class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label for="ticketQuantity" class="block text-lg font-medium text-gray-700 mb-2">Number of Tickets</label>
-                                    <select id="ticketQuantity" required class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
-                                        <option value="1">1 Ticket</option>
-                                        <option value="2">2 Tickets</option>
-                                        <option value="3">3 Tickets</option>
-                                        <option value="4">4 Tickets</option>
-                                        <option value="5">5 Tickets</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-lg text-gray-700">Price per ticket:</span>
-                                    <span id="ticketPrice" class="text-lg font-semibold text-gray-800">$0</span>
-                                </div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-lg text-gray-700">Number of tickets:</span>
-                                    <span id="ticketCount" class="text-lg font-semibold text-gray-800">1</span>
-                                </div>
-                                <div class="border-t border-gray-300 pt-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xl font-bold text-gray-800">Total Price:</span>
-                                        <span id="totalPrice" class="text-2xl font-bold text-indigo-600">$0</span>
+                    <div class="grid md:grid-cols-3 gap-12">
+                        <div class="space-y-6 md:col-span-1">
+                            <div class="bg-indigo-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-800 mb-4">Event Details</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar text-indigo-600 w-6"></i>
+                                        <p id="bookingEventDate" class="text-lg text-gray-600 ml-3"></p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock text-indigo-600 w-6"></i>
+                                        <p id="bookingEventTime" class="text-lg text-gray-600 ml-3"></p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-map-marker-alt text-indigo-600 w-6"></i>
+                                        <p id="bookingEventLocation" class="text-lg text-gray-600 ml-3"></p>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition duration-300 text-lg font-semibold">Book Tickets</button>
-                        </form>
+                            <div class="bg-indigo-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-800 mb-4">About This Event</h4>
+                                <p id="bookingEventDescription" class="text-lg text-gray-600"></p>
+                            </div>
+                        </div>
+                        <div class="bg-white border-2 border-gray-100 rounded-lg p-6 md:col-span-2">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-6">Book Your Tickets</h4>
+                            <form @submit.prevent="makePayment()" id="ticketForm" class="space-y-6">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="ticketName"
+                                            class="block text-lg font-medium text-gray-700 mb-2">Full Name</label>
+                                        <input type="text" id="ticketName" required  v-model="paymentInfo.full_name"
+                                            class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label for="ticketEmail"
+                                            class="block text-lg font-medium text-gray-700 mb-2">Email</label>
+                                        <input type="email" id="ticketEmail" required v-model="paymentInfo.email"
+                                            class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="ticketPhone"
+                                            class="block text-lg font-medium text-gray-700 mb-2">Phone Number</label>
+                                        <input type="tel" id="ticketPhone" required v-model="paymentInfo.phone_number"
+                                            class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label for="ticketQuantity"
+                                            class="block text-lg font-medium text-gray-700 mb-2">Number of
+                                            Tickets</label>
+                                        <select id="ticketQuantity" required
+                                            class="w-full rounded-md border-2 border-gray-300 px-4 py-1 text-lg focus:border-indigo-500 focus:ring-indigo-500">
+                                            <option value="1">1 Ticket</option>
+                                            <option value="2">2 Tickets</option>
+                                            <option value="3">3 Tickets</option>
+                                            <option value="4">4 Tickets</option>
+                                            <option value="5">5 Tickets</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-lg text-gray-700">Price per ticket:</span>
+                                        <span id="ticketPrice" class="text-lg font-semibold text-gray-800">$0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-lg text-gray-700">Number of tickets:</span>
+                                        <span id="ticketCount" class="text-lg font-semibold text-gray-800">1</span>
+                                    </div>
+                                    <div class="border-t border-gray-300 pt-2">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-gray-800">Total Price:</span>
+                                            <span id="totalPrice" class="text-2xl font-bold text-indigo-600">$0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition duration-300 text-lg font-semibold">Book
+                                    Tickets</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gray-50">
@@ -335,23 +397,33 @@
                     <form class="space-y-6 h-full">
                         <div class="mb-6">
                             <label for="name" class="block text-lg font-medium text-gray-700 mb-1">Name</label>
-                            <input type="text" id="name" class="mt-2 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4" placeholder="Your full name">
+                            <input type="text" id="name"
+                                class="mt-2 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4"
+                                placeholder="Your full name">
                         </div>
                         <div class="mb-6">
                             <label for="email" class="block text-lg font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" id="email" class="mt-2 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4" placeholder="your.email@example.com">
+                            <input type="email" id="email"
+                                class="mt-2 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4"
+                                placeholder="your.email@example.com">
                         </div>
                         <div class="mb-6 flex-grow">
                             <label for="message" class="block text-lg font-medium text-gray-700 mb-1">Message</label>
-                            <textarea id="message" class="mt-2 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4" style="min-height: 150px;" placeholder="Tell us about your event or inquiry..."></textarea>
+                            <textarea id="message"
+                                class="mt-2 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4"
+                                style="min-height: 150px;"
+                                placeholder="Tell us about your event or inquiry..."></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white px-8 py-4 rounded-md hover:bg-indigo-700 transition duration-300 text-lg font-semibold">Send Message</button>
+                        <button type="submit"
+                            class="w-full bg-indigo-600 text-white px-8 py-4 rounded-md hover:bg-indigo-700 transition duration-300 text-lg font-semibold">Send
+                            Message</button>
                     </form>
                 </div>
                 <div class="space-y-8">
                     <div>
                         <h3 class="text-2xl font-semibold mb-4">Get in Touch</h3>
-                        <p class="text-lg text-gray-600">Interested in booking our choir for your next event? We'd love to hear from you!</p>
+                        <p class="text-lg text-gray-600">Interested in booking our choir for your next event? We'd love
+                            to hear from you!</p>
                     </div>
                     <div class="space-y-6">
                         <div class="flex items-center space-x-4">
@@ -394,10 +466,14 @@
                 <ul class="flex space-x-8">
                     <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
                     <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About</a></li>
-                    <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
-                    <li><a href="#performances" class="text-gray-400 hover:text-white transition duration-300">Performances</a></li>
-                    <li><a href="#upcoming-events" class="text-gray-400 hover:text-white transition duration-300">Events</a></li>
-                    <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a>
+                    </li>
+                    <li><a href="#performances"
+                            class="text-gray-400 hover:text-white transition duration-300">Performances</a></li>
+                    <li><a href="#upcoming-events"
+                            class="text-gray-400 hover:text-white transition duration-300">Events</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    </li>
                 </ul>
             </div>
 
@@ -409,18 +485,83 @@
     </footer>
 
     <script>
+        // Make functions globally accessible
+        let currentTicketPrice = 0;
+
+        window.openTicketBooking = function(button) {
+            console.log('openTicketBooking called', button);
+            
+            try {
+                const eventCard = button.closest('.bg-white');
+                console.log('Event card found:', eventCard);
+                
+                if (!eventCard) {
+                    console.error('Could not find event card');
+                    return;
+                }
+                
+                const eventTitle = eventCard.querySelector('h3').textContent;
+                const eventDateElement = eventCard.querySelector('.fa-calendar').parentElement;
+                const eventDate = eventDateElement.textContent.trim();
+                const eventLocationElement = eventCard.querySelector('.fa-map-marker-alt').parentElement;
+                const eventLocation = eventLocationElement.textContent.trim();
+                const eventDescription = eventCard.querySelector('p').textContent;
+
+                console.log('Event details:', { eventTitle, eventDate, eventLocation, eventDescription });
+
+                // Extract ticket price from the event card
+                const priceContainers = eventCard.querySelectorAll('.text-gray-600');
+                let priceElement = null;
+                for (let container of priceContainers) {
+                    if (container.textContent.includes('per ticket')) {
+                        priceElement = container.querySelector('.font-semibold');
+                        break;
+                    }
+                }
+                const priceText = priceElement ? priceElement.textContent : '';
+                currentTicketPrice = parseInt(priceText.replace('$', '')) || 0;
+                
+                console.log('Ticket price:', currentTicketPrice);
+
+                // Populate booking section with event details
+                document.getElementById('bookingEventTitle').textContent = eventTitle;
+                document.getElementById('bookingEventDate').textContent = eventDate;
+                document.getElementById('bookingEventTime').textContent = eventDate; // Using same date for now
+                document.getElementById('bookingEventLocation').textContent = eventLocation;
+                document.getElementById('bookingEventDescription').textContent = eventDescription;
+
+                // Update price display
+                updatePriceDisplay();
+
+                // Show booking section and scroll to it
+                const bookingSection = document.getElementById('ticketBooking');
+                bookingSection.classList.remove('hidden');
+                bookingSection.scrollIntoView({ behavior: 'smooth' });
+                
+                console.log('Ticket booking form opened successfully');
+            } catch (error) {
+                console.error('Error in openTicketBooking:', error);
+            }
+        };
+
+        window.closeBooking = function() {
+            const bookingSection = document.getElementById('ticketBooking');
+            bookingSection.classList.add('hidden');
+            document.getElementById('ticketForm').reset();
+        };
+
         // Carousel functionality
         let currentImage = 0;
         const images = document.querySelectorAll('.carousel-image');
-        
+
         function nextImage() {
             images[currentImage].classList.remove('active');
             currentImage = (currentImage + 1) % images.length;
             images[currentImage].classList.add('active');
         }
-        
+
         setInterval(nextImage, 5000);
-        
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -436,54 +577,8 @@
         });
 
         // Ticket Booking functionality
-        const bookingSection = document.getElementById('ticketBooking');
-        const ticketForm = document.getElementById('ticketForm');
-        let currentTicketPrice = 0;
-
-        // Add click event listeners to all "Get Tickets" buttons
-        document.querySelectorAll('a[href="#contact"]').forEach(button => {
-            if (button.textContent.includes('Tickets')) {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const eventCard = this.closest('.bg-white');
-                    const eventTitle = eventCard.querySelector('h3').textContent;
-                    const eventDateElement = eventCard.querySelector('.fa-calendar').parentElement;
-                    const eventDate = eventDateElement.textContent.trim();
-                    const eventLocationElement = eventCard.querySelector('.fa-map-marker-alt').parentElement;
-                    const eventLocation = eventLocationElement.textContent.trim();
-                    const eventDescription = eventCard.querySelector('p').textContent;
-                    
-                    // Extract ticket price from the event card
-                    const priceContainers = eventCard.querySelectorAll('.text-gray-600');
-                    let priceElement = null;
-                    for (let container of priceContainers) {
-                        if (container.textContent.includes('per ticket')) {
-                            priceElement = container.querySelector('.font-semibold');
-                            break;
-                        }
-                    }
-                    const priceText = priceElement ? priceElement.textContent : '';
-                    currentTicketPrice = parseInt(priceText.replace('$', '')) || 0;
-
-                    // Populate booking section with event details
-                    document.getElementById('bookingEventTitle').textContent = eventTitle;
-                    document.getElementById('bookingEventDate').textContent = eventDate;
-                    document.getElementById('bookingEventTime').textContent = eventDate; // Using same date for now
-                    document.getElementById('bookingEventLocation').textContent = eventLocation;
-                    document.getElementById('bookingEventDescription').textContent = eventDescription;
-
-                    // Update price display
-                    updatePriceDisplay();
-
-                    // Show booking section and scroll to it
-                    bookingSection.classList.remove('hidden');
-                    bookingSection.scrollIntoView({ behavior: 'smooth' });
-                });
-            }
-        });
-
         // Add event listener for ticket quantity changes
-        document.getElementById('ticketQuantity').addEventListener('change', function() {
+        document.getElementById('ticketQuantity').addEventListener('change', function () {
             updatePriceDisplay();
         });
 
@@ -491,37 +586,16 @@
         function updatePriceDisplay() {
             const quantity = parseInt(document.getElementById('ticketQuantity').value);
             const total = currentTicketPrice * quantity;
-            
+
             document.getElementById('ticketPrice').textContent = `$${currentTicketPrice}`;
             document.getElementById('ticketCount').textContent = quantity;
             document.getElementById('totalPrice').textContent = `$${total}`;
         }
-
-        // Handle form submission
-        ticketForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = {
-                name: document.getElementById('ticketName').value,
-                email: document.getElementById('ticketEmail').value,
-                phone: document.getElementById('ticketPhone').value,
-                quantity: document.getElementById('ticketQuantity').value,
-                event: document.getElementById('bookingEventTitle').textContent,
-                totalPrice: document.getElementById('totalPrice').textContent
-            };
-            
-            // Here you would typically send the form data to your server
-            console.log('Ticket booking submitted:', formData);
-            
-            // Show success message and close booking section
-            alert('Thank you for your booking! We will contact you shortly with ticket details.');
-            closeBooking();
-        });
-
-        function closeBooking() {
-            const bookingSection = document.getElementById('ticketBooking');
-            bookingSection.classList.add('hidden');
-            document.getElementById('ticketForm').reset();
-        }
     </script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/payment.js"></script>
+
 </body>
-</html> 
+
+</html>
