@@ -442,39 +442,20 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/auth.js"></script>
     <script>
-        // Immediate authentication check - run before DOM loads
-        (async function() {
-            try {
-                // Set a short timeout for faster response
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
-                
-                const response = await fetch('/admin/verify', {
-                    method: 'GET',
-                    credentials: 'include',
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    // Redirect immediately if not authenticated
-                    window.location.href = '/admin/login';
-                    return;
-                }
-            } catch (error) {
-                console.error('Auth check error:', error);
-                // Redirect to login on error or timeout
+        // Show admin content immediately, check auth in background
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Hide loading screen and show admin content immediately
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('adminContent').style.display = 'block';
+            
+            // Check authentication in background (non-blocking)
+            const isAuth = await checkAuthInBackground();
+            
+            if (!isAuth) {
+                // Not authenticated, redirect to login
                 window.location.href = '/admin/login';
                 return;
             }
-        })();
-        
-        // Add logout event listener and initialize UI
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Hide loading screen and show admin content
-            document.getElementById('loadingScreen').style.display = 'none';
-            document.getElementById('adminContent').style.display = 'block';
             
             // Update user interface
             await AuthUtils.updateUserInterface();
@@ -498,6 +479,21 @@
                 }
             });
         });
+        
+        // Non-blocking authentication check
+        async function checkAuthInBackground() {
+            try {
+                const response = await fetch('/admin/verify', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                
+                return response.ok;
+            } catch (error) {
+                console.error('Background auth check error:', error);
+                return false;
+            }
+        }
     </script>
 </body>
 </html> 
