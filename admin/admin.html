@@ -446,17 +446,20 @@
         (async function() {
             try {
                 // Check if user is authenticated via server
-                const authenticated = await AuthUtils.isAuthenticated();
+                const response = await fetch('http://127.0.0.1:8000/admin/verify', {
+                    method: 'GET',
+                    credentials: 'include', // Include cookies in request
+                });
                 
-                if (!authenticated) {
+                if (!response.ok) {
                     // Redirect immediately if not authenticated
-                    window.location.href = "/admin/login";
+                    window.location.href = '/admin/login';
                     return;
                 }
             } catch (error) {
                 console.error('Auth check error:', error);
                 // Redirect to login on error
-                window.location.href = '"/admin/login"';
+                window.location.href = '/admin/login';
                 return;
             }
         })();
