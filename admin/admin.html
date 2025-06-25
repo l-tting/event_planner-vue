@@ -442,23 +442,19 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/auth.js"></script>
     <script>
-        // Show admin content immediately, check auth in background
+        // Show admin content immediately - let backend handle auth
         document.addEventListener('DOMContentLoaded', async function() {
             // Hide loading screen and show admin content immediately
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('adminContent').style.display = 'block';
             
-            // Check authentication in background (non-blocking)
-            const isAuth = await checkAuthInBackground();
-            
-            if (!isAuth) {
-                // Not authenticated, redirect to login
-                window.location.href = '/admin/login';
-                return;
+            // Update user interface (backend will redirect if not authenticated)
+            try {
+                await AuthUtils.updateUserInterface();
+            } catch (error) {
+                console.error('Error updating UI:', error);
+                // Backend will handle redirect if not authenticated
             }
-            
-            // Update user interface
-            await AuthUtils.updateUserInterface();
             
             // Add logout functionality
             document.getElementById('logoutBtn').addEventListener('click', AuthUtils.logout);
@@ -479,21 +475,6 @@
                 }
             });
         });
-        
-        // Non-blocking authentication check
-        async function checkAuthInBackground() {
-            try {
-                const response = await fetch('/admin/verify', {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                
-                return response.ok;
-            } catch (error) {
-                console.error('Background auth check error:', error);
-                return false;
-            }
-        }
     </script>
 </body>
 </html> 

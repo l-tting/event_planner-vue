@@ -2,27 +2,7 @@
 
 const API_BASE_URL = ''; // Use relative URLs for deployment
 
-// Check if user is authenticated by making a request to verify session
-async function isAuthenticated() {
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
-        
-        const response = await fetch(`${API_BASE_URL}/admin/verify`, {
-            method: 'GET',
-            credentials: 'include', // Include cookies in request
-            signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        return response.ok;
-    } catch (error) {
-        console.error('Auth check error:', error);
-        return false;
-    }
-}
-
-// Make authenticated API request
+// Make authenticated API request - backend handles auth
 async function authenticatedRequest(endpoint, options = {}) {
     const defaultOptions = {
         credentials: 'include', // Include cookies in request
@@ -42,9 +22,9 @@ async function authenticatedRequest(endpoint, options = {}) {
     
     const response = await fetch(`${API_BASE_URL}${endpoint}`, finalOptions);
     
-    // If session is expired or invalid, redirect to login
+    // If session is expired or invalid, backend will redirect
     if (response.status === 401) {
-        logout();
+        window.location.href = '/admin/login';
         return;
     }
     
@@ -67,17 +47,7 @@ async function logout() {
     }
 }
 
-// Check authentication and redirect if not authenticated
-async function requireAuth() {
-    const authenticated = await isAuthenticated();
-    if (!authenticated) {
-        window.location.href = '/admin/login';
-        return false;
-    }
-    return true;
-}
-
-// Get user data from server
+// Get user data from server - backend handles auth
 async function getUserData() {
     try {
         const response = await authenticatedRequest('/admin/profile');
@@ -120,10 +90,8 @@ async function updateUserInterface() {
 
 // Export functions for use in other scripts
 window.AuthUtils = {
-    isAuthenticated,
     authenticatedRequest,
     logout,
-    requireAuth,
     getUserData,
     updateUserInterface,
     API_BASE_URL

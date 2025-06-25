@@ -231,33 +231,12 @@
 
     <!-- Enhanced JavaScript for password toggle and Vue app -->
     <script>
-        // Show login content immediately, check auth in background
+        // Show login content immediately - no auth checks
         document.addEventListener('DOMContentLoaded', function() {
             // Hide loading screen and show login content immediately
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('loginContent').style.display = 'flex';
-            
-            // Check authentication in background (non-blocking)
-            checkAuthInBackground();
         });
-        
-        // Non-blocking authentication check
-        async function checkAuthInBackground() {
-            try {
-                const response = await fetch('/admin/verify', {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                
-                if (response.ok) {
-                    // Already authenticated, redirect to admin panel
-                    window.location.href = '/admin';
-                }
-            } catch (error) {
-                console.error('Background auth check error:', error);
-                // Stay on login page if check fails
-            }
-        }
         
         // Password toggle functionality
         document.getElementById('togglePassword').addEventListener('click', function() {
