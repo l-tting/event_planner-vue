@@ -1,14 +1,20 @@
 // Authentication utility functions for admin panel
 
-const API_BASE_URL = 'http://localhost:8000'; // Update this to match your FastAPI server URL
+const API_BASE_URL = ''; // Use relative URLs for deployment
 
 // Check if user is authenticated by making a request to verify session
 async function isAuthenticated() {
     try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+        
         const response = await fetch(`${API_BASE_URL}/admin/verify`, {
             method: 'GET',
             credentials: 'include', // Include cookies in request
+            signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
         return response.ok;
     } catch (error) {
         console.error('Auth check error:', error);
@@ -57,7 +63,7 @@ async function logout() {
         console.error('Logout error:', error);
     } finally {
         // Redirect to login
-        window.location.href = 'login.html';
+        window.location.href = '/admin/login';
     }
 }
 
@@ -65,7 +71,7 @@ async function logout() {
 async function requireAuth() {
     const authenticated = await isAuthenticated();
     if (!authenticated) {
-        window.location.href = 'login.html';
+        window.location.href = '/admin/login';
         return false;
     }
     return true;

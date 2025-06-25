@@ -445,11 +445,17 @@
         // Immediate authentication check - run before DOM loads
         (async function() {
             try {
-                // Check if user is authenticated via server
-                const response = await fetch('http://127.0.0.1:8000/admin/verify', {
+                // Set a short timeout for faster response
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+                
+                const response = await fetch('/admin/verify', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in request
+                    credentials: 'include',
+                    signal: controller.signal
                 });
+                
+                clearTimeout(timeoutId);
                 
                 if (!response.ok) {
                     // Redirect immediately if not authenticated
@@ -458,7 +464,7 @@
                 }
             } catch (error) {
                 console.error('Auth check error:', error);
-                // Redirect to login on error
+                // Redirect to login on error or timeout
                 window.location.href = '/admin/login';
                 return;
             }

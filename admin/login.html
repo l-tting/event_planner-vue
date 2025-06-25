@@ -233,11 +233,25 @@
     <script>
         // Immediate authentication check - run before Vue app loads
         (async function() {
+            // Fallback timeout to show login form if auth check takes too long
+            const fallbackTimeout = setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('loginContent').style.display = 'flex';
+            }, 3000); // Show login form after 3 seconds regardless
+            
             try {
-                const response = await fetch('http://127.0.0.1:8000/admin/verify', {
+                // Set a short timeout for faster response
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+                
+                const response = await fetch('/admin/verify', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in request
+                    credentials: 'include',
+                    signal: controller.signal
                 });
+                
+                clearTimeout(timeoutId);
+                clearTimeout(fallbackTimeout);
                 
                 if (response.ok) {
                     // Already authenticated, redirect to admin panel
@@ -246,9 +260,9 @@
                 }
             } catch (error) {
                 console.error('Auth check error:', error);
-                // Continue to login form on error
+                // Continue to login form on error or timeout
             } finally {
-                // Hide loading screen and show login content
+                // Hide loading screen and show login content immediately
                 document.getElementById('loadingScreen').style.display = 'none';
                 document.getElementById('loginContent').style.display = 'flex';
             }
@@ -289,7 +303,7 @@
                     this.showError = false;
                     
                     try {
-                        const response = await axios.post('http://127.0.0.1:8000/admin/login', this.adminAuth);
+                        const response = await axios.post('/admin/login', this.adminAuth);
                         console.log(response.data);
                         
                         // Backend handles token storage in HTTP-only cookie
