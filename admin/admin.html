@@ -450,13 +450,13 @@
                 
                 if (!authenticated) {
                     // Redirect immediately if not authenticated
-                    window.location.href = 'login.html';
+                    window.location.href = '"/admin/login"';
                     return;
                 }
             } catch (error) {
                 console.error('Auth check error:', error);
                 // Redirect to login on error
-                window.location.href = 'login.html';
+                window.location.href = '"/admin/login"';
                 return;
             }
         })();
