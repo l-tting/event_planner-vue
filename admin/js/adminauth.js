@@ -1,7 +1,7 @@
 Vue.createApp({
     data() {
         return {
-            url: 'http://127.0.0.1:8000/admin/',
+            url: 'http://161.35.168.15:8000/admin/',
             adminCreate: {
                 admin_name: '',
                 admin_email: '',
