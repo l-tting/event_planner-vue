@@ -1,7 +1,7 @@
 Vue.createApp({
     data() {
         return {
-            url: 'http://161.35.168.15:8000/admin/',
+            url: 'https://oneshop.co.ke/api/admin/',
             adminCreate: {
                 admin_name: '',
                 admin_email: '',
