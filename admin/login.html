@@ -258,7 +258,7 @@
                     this.showError = false;
                     
                     try {
-                        const response = await axios.post('http://127.0.0.1:8000/admin/login', this.adminAuth);
+                        const response = await axios.post('http://161.35.168.15:8000/admin/login', this.adminAuth);
                         console.log(response.data);
                         
                         // Backend handles token storage in HTTP-only cookie
