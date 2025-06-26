@@ -70,6 +70,7 @@ Vue.createApp({
             try {
                 const response = await axios.post(this.url + 'login', this.adminAuth);
                 console.log(response.data);
+                console.log("Sending payload:", this.adminAuth)
                 
                 // Backend handles token storage in HTTP-only cookie
                 // Just redirect to admin panel on successful login
