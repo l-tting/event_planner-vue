@@ -74,7 +74,7 @@ Vue.createApp({
                 
                 // Backend handles token storage in HTTP-only cookie
                 // Just redirect to admin panel on successful login
-                window.location.href = 'admin.html';
+                window.location.href = '/admin';
                 
             } catch (error) {
                 console.log(error);
