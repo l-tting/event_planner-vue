@@ -449,9 +449,9 @@
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
                 
-                const response = await fetch('/admin/verify', {
+                const response = await fetch('https://oneshop.co.ke/api/admin/verify', {
                     method: 'GET',
-                    credentials: 'include',
+                    credentials: 'include', // Include HTTP-only cookies
                     signal: controller.signal
                 });
                 

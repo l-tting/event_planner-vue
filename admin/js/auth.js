@@ -1,6 +1,6 @@
 // Authentication utility functions for admin panel
 
-const API_BASE_URL = ''; // Use relative URLs for deployment
+const API_BASE_URL = 'https://oneshop.co.ke/api'; // Production server URL
 
 // Check if user is authenticated by making a request to verify session
 async function isAuthenticated() {
@@ -10,7 +10,7 @@ async function isAuthenticated() {
         
         const response = await fetch(`${API_BASE_URL}/admin/verify`, {
             method: 'GET',
-            credentials: 'include', // Include cookies in request
+            credentials: 'include', // Include HTTP-only cookies in request
             signal: controller.signal
         });
         
@@ -25,7 +25,7 @@ async function isAuthenticated() {
 // Make authenticated API request
 async function authenticatedRequest(endpoint, options = {}) {
     const defaultOptions = {
-        credentials: 'include', // Include cookies in request
+        credentials: 'include', // Include HTTP-only cookies in request
         headers: {
             'Content-Type': 'application/json',
         },
@@ -54,10 +54,10 @@ async function authenticatedRequest(endpoint, options = {}) {
 // Logout function
 async function logout() {
     try {
-        // Call logout endpoint to clear server-side session
+        // Call logout endpoint to clear server-side session and HTTP-only cookie
         await fetch(`${API_BASE_URL}/admin/logout`, {
             method: 'POST',
-            credentials: 'include', // Include cookies in request
+            credentials: 'include', // Include HTTP-only cookies in request
         });
     } catch (error) {
         console.error('Logout error:', error);
