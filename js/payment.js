@@ -1,7 +1,6 @@
 Vue.createApp({
     data(){
         return {
-                url:'http://127.0.0.1:8000/',
                 paymentInfo:{
                     full_name:null,
                     email:null,
@@ -16,18 +15,18 @@ Vue.createApp({
                 // Calculate the total amount before making payment
                 this.calculateAmount();
                 
-                const response = await axios.post(this.url + 'payment', this.paymentInfo)
-                console.log(response.data);
+                // Simulate payment processing (no backend)
+                console.log('Payment info:', this.paymentInfo);
                 
                 // Show success message and close booking form
                 alert('Thank you for your booking! We will contact you shortly with ticket details.');
                 this.closeBooking();
                 
-                return response.data;
+                return { success: true, message: 'Booking submitted successfully' };
             }
             catch(error){
                 console.log(error);
-                alert('There was an error processing your payment. Please try again.');
+                alert('There was an error processing your booking. Please try again.');
                 throw error;
             }
         },

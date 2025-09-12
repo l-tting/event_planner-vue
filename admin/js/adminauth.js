@@ -39,12 +39,12 @@ Vue.createApp({
             }
 
             try {
-                const response = await axios.post(this.url + 'create', this.adminCreate);
-                console.log(response.data);
+                // Simulate admin creation (no backend API call)
+                console.log('Creating admin user:', this.adminCreate);
                 
                 // Show success message
                 this.showSuccess = true;
-                this.successMessage = 'Admin user added successfully!';
+                this.successMessage = 'Admin user added successfully! (Local demo)';
                 this.showError = false;
                 
                 // Reset form
@@ -58,7 +58,7 @@ Vue.createApp({
             } catch (error) {
                 console.log(error);
                 this.showError = true;
-                this.errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+                this.errorMessage = 'An error occurred. Please try again.';
                 this.showSuccess = false;
             }
         },

@@ -1,0 +1,17 @@
+{
+  "name": "inconel-website",
+  "version": "1.0.0",
+  "description": "Inconel website - Static Vue.js frontend",
+  "main": "index.html",
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "http-server . -p 3000 -o",
+    "dev": "http-server . -p 3000 -o --cors"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": ["choir", "website", "vue", "static"],
+  "author": "Inconel",
+  "license": "MIT"
+}
