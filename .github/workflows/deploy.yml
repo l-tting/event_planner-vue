@@ -24,19 +24,20 @@ jobs:
       # 3. Build and push image
       - name: Build and push Vue Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/vue-app:latest .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/vue-app:latest
+          docker build -t $DOCKERHUB_USERNAME/vue-app:latest .
+          docker push $DOCKERHUB_USERNAME/vue-app:latest
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
       # 4. Deploy on server
       - name: Deploy on server
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.DO_SERVER_IP}}
-          username: ${{ secrets.DO_SERVER_USER}}
+          host: ${{ secrets.DO_SERVER_IP }}
+          username: ${{ secrets.DO_SERVER_USER }}
           key: ${{ secrets.DO_SSH_KEY }}
           script: |
             cd /root/inconel
-
 
             # deploy with latest images
             docker-compose -f inconel.yml up -d --pull always
